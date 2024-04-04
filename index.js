@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const PostRoutes = require("./routes/posts");
+require("dotenv").config();
 
 const app = express();
 
@@ -12,8 +13,7 @@ app.use(cors());
 
 app.use("/posts", PostRoutes);
 
-const CONNECTION_URL =
-  "mongodb+srv://sabarishharidas:sabarishharidas123@cluster0.e4gukfs.mongodb.net/";
+const CONNECTION_URL = process.env.MONGODB_URL;
 const PORT = process.env.PORT || 8000;
 
 mongoose
