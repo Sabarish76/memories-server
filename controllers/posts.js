@@ -45,4 +45,22 @@ const deletePost = async (req, res) => {
   res.json({ message: "Post Deleted Successfully" });
 };
 
-module.exports = { getPosts, createPosts, updatePost, deletePost };
+const likepost = async (req, res) => {
+  const { id: _id } = req.params;
+
+  if (!ObjectId.isValid(_id)) return res.status(404).send("No Post With Id");
+
+  const post = await PostMessage.findById(_id);
+
+  const updatedpost = await PostMessage.findByIdAndUpdate(
+    _id,
+    {
+      likeCount: post.likeCount + 1,
+    },
+    { new: true }
+  );
+
+  res.json(updatedpost);
+};
+
+module.exports = { getPosts, createPosts, updatePost, deletePost, likepost };
